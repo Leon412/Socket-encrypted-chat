@@ -36,3 +36,13 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 5. Inviare al server un messaggio cifrato;
 6. Richiedere al server tutti i messaggi cifrati a lui indirizzati;
 7. Decifrare e visualizzare tutti i messaggi ricevuti da altri client.
+
+# IMPLEMENTAZIONE IN JAVA:
+#### Classi:
+Client
+KeyGenerator
+KeyPair
+Message
+RSA
+Server
+ServerThread
