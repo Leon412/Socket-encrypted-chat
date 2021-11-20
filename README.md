@@ -38,19 +38,22 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 7. Decifrare e visualizzare tutti i messaggi ricevuti da altri client.
 
 # IMPLEMENTAZIONE IN JAVA:
-#### Classi:
-Client
+### Classi:
+#### Client
 
-KeyGenerator
-(Classe che implementa i metodi per la generazione delle chiavi di un qualsiasi utente che utilizza l'applicazione)
+#### KeyGenerator
+(Classe che implementa i metodi per la generazione delle chiavi di un qualsiasi utente che utilizzi l'applicazione)
 
-KeyPair
+#### KeyPair
+(Classe che implementa la struttura dati per la memorizzazione delle chiavi)
 
-Message
+#### Message
+(Classe che implementa la struttura dati per la memorizzazione del messaggio criptato, del mittente e del destinatario)
 
-RSA
- 
-Server
+#### RSA
+(Classe che implementa la crittografia RSA del messaggio) 
 
-ServerThread
+#### Server
+
+#### ServerThread
 
