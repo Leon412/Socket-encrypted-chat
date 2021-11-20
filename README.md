@@ -2,7 +2,7 @@
 
 
 ### Obiettivo del progetto:
-Realizzazione un’applicazione client-server per la comunicazione cifrata tra coppie di utenti. Codifica e decodifica dei messaggi deve avvenire tramite l’algoritmo asimmetrico RSA.
+Realizzazione un’applicazione client-server per la comunicazione cifrata tra coppie di utenti. Codifica e decodifica dei messaggi deve avvenire tramite l’algoritmo asimmetrico [RSA](https://it.wikipedia.org/wiki/RSA_(crittografia)).
 ### Macro funzionalità dell’applicazione:
 1. Generazione di coppie di chiavi pubblica-privata. Ad ogni utente del sistema deve essere
    assegnata una coppia di chiavi per consentirgli di comunicare con altri utenti. La generazione
