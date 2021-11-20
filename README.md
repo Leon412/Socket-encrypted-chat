@@ -39,10 +39,10 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 
 # IMPLEMENTAZIONE IN JAVA:
 #### Classi:
-Client
-KeyGenerator
-KeyPair
-Message
-RSA
-Server
-ServerThread
+Client.
+KeyGenerator.
+KeyPair.
+Message.
+RSA.
+Server.
+ServerThread.
