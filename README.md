@@ -10,12 +10,12 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
    client, dopo aver generato la sua coppia di chiavi, deve inviare al server la sua chiave pubblica
    per consentirne la distribuzione ad altri utenti.
 2. Invio di messaggi cifrati;
-3. Ricezione di messaggi cifrati
+3. Ricezione di messaggi cifrati.
 
 ### Compiti del server:
 1. Rimane in attesa di eventuali richieste di connessione da parte di client;
 2. Quando arriva una richiesta di connessione da parte di un client, avvia un thread che gestisce
-le richieste che vengono da quello specifico client
+   le richieste che vengono da quello specifico client.
 
 ### Il thread che gestisce le richieste di un client C deve poter:
 1. Memorizzare la chiave pubblica di C (chiave che viene inviata da C); questa informazione deve
