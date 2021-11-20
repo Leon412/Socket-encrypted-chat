@@ -42,7 +42,7 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 Client
 
 KeyGenerator
-Classe che implementa i metodi per la generazione delle chiavi di un qualsiasi utente che utilizza l'applicazione
+(Classe che implementa i metodi per la generazione delle chiavi di un qualsiasi utente che utilizza l'applicazione)
 
 KeyPair
 
