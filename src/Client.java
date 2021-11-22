@@ -16,22 +16,35 @@ public class Client {
             Socket echoSocket = new Socket(hostName, portNumber);
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in))
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
         ) {
             System.out.println("Generazioni delle chiavi RSA in corso...");
             clientPair = generator.generateKeys(100); //genera le chiavi con numeri a tot cifre
+            maxChars = RSA.maxChars(clientPair.getPublicKey());
 
             while ((response = in.readLine()) != null) {
-                if(response.equals("INPUT")){
+                if(response.equals("INPUT")) {
                     toSend = stdIn.readLine();
-                    if(toSend.indexOf("/send ") == 0){
+                    if(toSend.indexOf("/send ") == 0) {
                         String toSendArray[] = toSend.split(" ", 3);
-                        if(toSendArray.length >= 3){
-                            toSendArray[2] = RSA.encrypt(toSendArray[2], clientPair.getPublicKey());
-                            toSend = String.join(" ", toSendArray);
+                        if(toSendArray.length >= 3) {
+                            if(toSendArray[2].length() <= maxChars) {
+                                toSendArray[2] = RSA.encrypt(toSendArray[2], clientPair.getPublicKey());
+                                toSend = String.join(" ", toSendArray);
+                                out.println(toSend);
+                            }
+                            else {
+                                System.out.println("Il messaggio non puo' superare i " + maxChars + " caratteri");
+                                out.println("/send ");
+                            }
+                        }
+                        else {
+                            out.println(toSend);
                         }
                     }
-                    out.println(toSend);
+                    else {
+                        out.println(toSend);
+                    }
                 }
                 else if(response.equals("DECRYPT")) {
                     response = in.readLine();
@@ -43,8 +56,9 @@ public class Client {
                 else if(response.equals("SENDKEY")) {
                     out.println(clientPair.getPublicKey());
                 }
-                else
+                else {
                     System.out.println(response);
+                }
             }
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);

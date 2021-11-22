@@ -1,31 +1,24 @@
 import java.net.*;
-import java.util.ArrayList;
 import java.io.*;
 
 public class ServerThread extends Thread{
     private Socket s = null;
-
     private MessageBox mBox;
-    private ArrayList<ServerThread> threads = new ArrayList<ServerThread>();
+    
+    private String clientKey = null;
+    private String userName = null;
 
-    private PrintWriter out;
-    private BufferedReader in;
-
-    private String line = null;
-
-    public ServerThread(Socket s, int c, ArrayList<ServerThread> threads, MessageBox mBox) {
+    public ServerThread(Socket s, MessageBox mBox) {
         this.s=s;
-        this.threads = threads;
         this.mBox = mBox;
     }
 
     public void run() {
-        String clientKey = null;
-        String userName = null;
-        try {
-            out = new PrintWriter(s.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(s.getInputStream()));
-
+        String line = null;
+        try(
+            PrintWriter out = new PrintWriter(s.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+        ) {
             do {
                 out.println("<Server> Choose your username (no spaces): ");
                 out.println("INPUT");
@@ -46,23 +39,23 @@ public class ServerThread extends Thread{
                     out.println(mBox.listUsers());
                     break;
                 case "/send":
-                    if(lineArray.length < 3){
+                    if(lineArray.length < 3) {
                         out.println("<Server> wrong syntax");
-                        break;
                     }
-                    if(mBox.contains(lineArray[1])){
+                    else if(mBox.contains(lineArray[1])) {
                         mBox.send(lineArray[1], userName, lineArray[2]);
                         out.println("DECRYPT");
                         out.println(mBox.getLastMessageFor(userName).formattedMessage());
                     }
-                    else
+                    else {
                         out.println("<Server> Username not found");
+                    }
                     break;
                 case "/r":
                     
                     break;
                 case "/help":
-
+                    out.println("");
                     break;
                 default:
                     out.println("<Server> Command not found");

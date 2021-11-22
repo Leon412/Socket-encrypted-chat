@@ -18,7 +18,7 @@ public class Server {
                 ServerSocket serverSocket = new ServerSocket(portNumber);
             ) {
                 Socket s = serverSocket.accept();
-                threads.add(new ServerThread(s, (threads.size()+1), threads, mBox));
+                threads.add(new ServerThread(s, mBox));
                 threads.get(threads.size()-1).start();
                 
             } catch (IOException e) {
