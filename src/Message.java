@@ -1,8 +1,8 @@
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;             //libreria per utilizzo della data
+import java.time.format.DateTimeFormatter;      //libreria per permettere la formattazione della data
 
 public class Message {
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //yy/MM/dd 
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //formato yy/MM/dd 
 
     private String encryptedMsg;                     //messaggio criptato
     private String sender;                          //mittente
@@ -39,7 +39,7 @@ public class Message {
         this.sendingDate = sendingDate;
     }
     
-    //metodo per formattare la data 
+    //metodo per formattare la data del messaggio
     public String formattedMessage(){
         return "[" + dtf.format(sendingDate) + "]" + "<" + sender + "> " + encryptedMsg;
     }
