@@ -50,6 +50,9 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 #### Message
 (Classe che implementa la struttura dati per la memorizzazione del messaggio criptato, del mittente e del destinatario)
 
+#### MessageBox
+(Classe che crea la stuttura che gestisce i messaggi con i relativi metodi)
+
 #### RSA
 (Classe che implementa la crittografia RSA del messaggio) 
 
