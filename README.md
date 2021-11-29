@@ -1,5 +1,8 @@
 # Socket-encrypted-chat
-
+### Membri del progetto;
+1. Panichi Leonardo (Leon421)
+2. Pesaresi Adriano (adrianopesaresi)
+3. Mazzaferro Sebastiano (SebastianoMazzaferro)
 
 ### Obiettivo del progetto:
 Realizzazione un’applicazione client-server per la comunicazione cifrata tra coppie di utenti. Codifica e decodifica dei messaggi deve avvenire tramite l’algoritmo asimmetrico [RSA](https://it.wikipedia.org/wiki/RSA_(crittografia)).
@@ -28,7 +31,7 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
    descritta al punto 3).
 
 ### Ogni client C deve poter:
-1. Generare la propria coppia di chiavi pubblica-privata ;
+1. Generare la propria coppia di chiavi pubblica-privata;
 2. Inviare al server la propria chiave pubblica in modo che questa possa essere condivisa con
    altri client;
 3. Richiedere al server la chiave pubblica di un altro client a cui vuole mandare un messaggio;
@@ -38,8 +41,9 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 7. Decifrare e visualizzare tutti i messaggi ricevuti da altri client.
 
 # IMPLEMENTAZIONE IN JAVA:
-### Classi:
+## Classi:
 #### Client
+Classe che rappresenta l'utente che vuole comunicare
 
 #### KeyGenerator
 (Classe che implementa i metodi per la generazione delle chiavi di un qualsiasi utente che utilizzi l'applicazione)
@@ -49,6 +53,9 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 
 #### Message
 (Classe che implementa la struttura dati per la memorizzazione del messaggio criptato, del mittente e del destinatario)
+
+#### MessageBox
+(Classe che crea la stuttura che gestisce i messaggi con i relativi metodi)
 
 #### RSA
 (Classe che implementa la crittografia RSA del messaggio) 
