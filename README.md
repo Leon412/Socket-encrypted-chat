@@ -41,7 +41,7 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 7. Decifrare e visualizzare tutti i messaggi ricevuti da altri client.
 
 # IMPLEMENTAZIONE IN JAVA:
-### Classi:
+## Classi:
 #### Client
 
 #### KeyGenerator
