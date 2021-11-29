@@ -1,6 +1,6 @@
 import java.io.*;
 import java.net.*;
- 
+
 public class Client {
     public static void main(String[] args) throws IOException {
         String hostName = "localhost";
@@ -10,7 +10,8 @@ public class Client {
         KeyPair clientPair; //Paio di chiavi RSA del client
         int maxChars = 0; //Massimo numero di caratteri inviabili
         String toSend = null; //Stringa da mandare al server
-        String response;
+        String response = null;
+        String key = null;
         
         try (
             Socket echoSocket = new Socket(hostName, portNumber);
@@ -25,17 +26,23 @@ public class Client {
             while ((response = in.readLine()) != null) {
                 if(response.equals("INPUT")) {
                     toSend = stdIn.readLine();
-                    if(toSend.indexOf("/send ") == 0) {
+                    if(toSend.indexOf("send ") == 0) {
                         String toSendArray[] = toSend.split(" ", 3);
                         if(toSendArray.length >= 3) {
-                            if(toSendArray[2].length() <= maxChars) {
-                                toSendArray[2] = RSA.encrypt(toSendArray[2], clientPair.getPublicKey());
+                            out.println("getkey " + toSendArray[1]);
+                            key = in.readLine();
+                            in.readLine();
+                            if(!key.equals("<Server> wrong syntax") && toSendArray[2].length() <= maxChars) {
+                                toSendArray[2] = RSA.encrypt(toSendArray[2], key);
                                 toSend = String.join(" ", toSendArray);
                                 out.println(toSend);
                             }
                             else {
-                                System.out.println("Il messaggio non puo' superare i " + maxChars + " caratteri");
-                                out.println("/send ");
+                                if(key.equals("<Server> wrong syntax"))
+                                    System.out.println("Username not found");
+                                else
+                                    System.out.println("Il messaggio non puo' superare gli/i " + maxChars + " caratteri");
+                                out.println("send ");
                             }
                         }
                         else {
@@ -48,8 +55,8 @@ public class Client {
                 }
                 else if(response.equals("DECRYPT")) {
                     response = in.readLine();
-                    String responseArray[] = response.split(" ", 3);
-                    responseArray[2] = RSA.decrypt(responseArray[2], clientPair.getPrivateKey());
+                    String responseArray[] = response.split(" ", 2);
+                    responseArray[1] = RSA.decrypt(responseArray[1], clientPair.getPrivateKey());
                     response = String.join(" ", responseArray);
                     System.out.println(response);
                 }

@@ -13,7 +13,7 @@ public class MessageBox {
     }
 
     public boolean hasMessageFor(String userName) {
-        if((!mb.containsKey(userName)) || (mb.get(userName).size() == 0)) //effettivamente bo
+        if((!mb.containsKey(userName)) || (mb.get(userName).size() == 0))
             return false;
         return true;
     }
@@ -26,11 +26,11 @@ public class MessageBox {
         return mb.keySet().toString();
     }
 
-    public void send(String receiver, String sender, String msg) {
+    public synchronized void send(String receiver, String sender, String msg) { //TODO capisci come funziona e aggiusta
         if(!mb.containsKey(receiver)){
-            System.out.println("username not found");
             return;
         }
+        System.out.println(msg);
         mb.get(receiver).add(new Message(sender, msg, LocalDateTime.now()));
     }
 
@@ -38,5 +38,9 @@ public class MessageBox {
         if(mb.containsKey(line))
             return true;
         return false;
+    }
+
+    public String getKey(String userName) {
+        return pk.get(userName);
     }
 }

@@ -2,7 +2,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Message {
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yy/MM/dd HH:mm");
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //yy/MM/dd 
 
     private String encryptedMsg;
     private String sender;
