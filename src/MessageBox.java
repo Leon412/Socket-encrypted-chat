@@ -7,7 +7,7 @@ public class MessageBox {
     private HashMap<String, Queue<Message>> mb = new HashMap<String, Queue<Message>>();
     private HashMap<String, String> pk = new HashMap<String, String>();
 
-    public void newUser(String userName, String publicKey) {
+    public synchronized void newUser(String userName, String publicKey) {
         mb.put(userName, new LinkedList<>());
         pk.put(userName, publicKey);
     }
@@ -18,7 +18,7 @@ public class MessageBox {
         return true;
     }
 
-    public Message getLastMessageFor(String userName) {
+    public synchronized Message getLastMessageFor(String userName) {
         return mb.get(userName).poll();
     }
 
@@ -26,12 +26,12 @@ public class MessageBox {
         return mb.keySet().toString();
     }
 
-    public synchronized void send(String receiver, String sender, String msg) { //TODO capisci come funziona e aggiusta
+    public synchronized boolean send(String receiver, String sender, String msg) {
         if(!mb.containsKey(receiver)){
-            return;
+            return false;
         }
-        System.out.println(msg);
         mb.get(receiver).add(new Message(sender, msg, LocalDateTime.now()));
+        return true;
     }
 
     public boolean contains(String line) {

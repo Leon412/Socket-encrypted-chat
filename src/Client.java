@@ -23,23 +23,24 @@ public class Client {
             clientPair = generator.generateKeys(100); //genera le chiavi con numeri a tot cifre
             maxChars = RSA.maxChars(clientPair.getPublicKey());
 
-            while ((response = in.readLine()) != null) {
+            while ((response = in.readLine()) != null && !response.equals("QUIT")) {
                 if(response.equals("INPUT")) {
+                    System.out.print("\r\n>");
                     toSend = stdIn.readLine();
                     if(toSend.indexOf("send ") == 0) {
                         String toSendArray[] = toSend.split(" ", 3);
-                        if(toSendArray.length >= 3) {
+                        if(toSendArray.length == 3) {
                             out.println("getkey " + toSendArray[1]);
                             key = in.readLine();
                             in.readLine();
-                            if(!key.equals("<Server> wrong syntax") && toSendArray[2].length() <= maxChars) {
+                            if(!key.equals("<Server> sintassi errata") && toSendArray[2].length() <= maxChars) {
                                 toSendArray[2] = RSA.encrypt(toSendArray[2], key);
                                 toSend = String.join(" ", toSendArray);
                                 out.println(toSend);
                             }
                             else {
-                                if(key.equals("<Server> wrong syntax"))
-                                    System.out.println("Username not found");
+                                if(key.equals("<Server> sintassi errata"))
+                                    System.out.println("Username non trovato");
                                 else
                                     System.out.println("Il messaggio non puo' superare gli/i " + maxChars + " caratteri");
                                 out.println("send ");
@@ -52,6 +53,10 @@ public class Client {
                     else {
                         out.println(toSend);
                     }
+                }
+                else if(response.equals("INPUTSN")) {
+                    toSend = stdIn.readLine();
+                    out.println(toSend);
                 }
                 else if(response.equals("DECRYPT")) {
                     response = in.readLine();
@@ -67,6 +72,7 @@ public class Client {
                     System.out.println(response);
                 }
             }
+            out.println("QUIT");
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
             System.exit(1);
