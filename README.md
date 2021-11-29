@@ -43,6 +43,7 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
 # IMPLEMENTAZIONE IN JAVA:
 ## Classi:
 #### Client
+Classe che rappresenta l'utente che vuole comunicare
 
 #### KeyGenerator
 (Classe che implementa i metodi per la generazione delle chiavi di un qualsiasi utente che utilizzi l'applicazione)
