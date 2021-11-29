@@ -1,4 +1,10 @@
 # Socket-encrypted-chat
+### Membri del progetto;
+-Panichi Leonardo
+
+-Pesaresi Adriano
+
+-Mazzaferro Sebastiano
 
 
 ### Obiettivo del progetto:
