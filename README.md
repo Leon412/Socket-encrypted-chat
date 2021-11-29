@@ -28,7 +28,7 @@ Realizzazione un’applicazione client-server per la comunicazione cifrata tra c
    descritta al punto 3).
 
 ### Ogni client C deve poter:
-1. Generare la propria coppia di chiavi pubblica-privata ;
+1. Generare la propria coppia di chiavi pubblica-privata;
 2. Inviare al server la propria chiave pubblica in modo che questa possa essere condivisa con
    altri client;
 3. Richiedere al server la chiave pubblica di un altro client a cui vuole mandare un messaggio;
