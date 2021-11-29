@@ -1,11 +1,8 @@
 # Socket-encrypted-chat
 ### Membri del progetto;
--Panichi Leonardo (Leon421)
-
--Pesaresi Adriano (adrianopesaresi)
-
--Mazzaferro Sebastiano (SebastianoMazzaferro)
-
+1. Panichi Leonardo (Leon421)
+2. Pesaresi Adriano (adrianopesaresi)
+3. Mazzaferro Sebastiano (SebastianoMazzaferro)
 
 ### Obiettivo del progetto:
 Realizzazione un’applicazione client-server per la comunicazione cifrata tra coppie di utenti. Codifica e decodifica dei messaggi deve avvenire tramite l’algoritmo asimmetrico [RSA](https://it.wikipedia.org/wiki/RSA_(crittografia)).
