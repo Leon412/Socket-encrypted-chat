@@ -4,7 +4,7 @@ import java.util.Queue;
 import java.time.LocalDateTime;
 
 public class MessageBox {
-    private HashMap<String, Queue<Message>> mb = new HashMap<String, Queue<Message>>();
+    private HashMap<String, Queue<Message>> mb = new HashMap<String, Queue<Message>>();         //mappa che contiene i messaggi, con indice = ricevente
     private HashMap<String, String> pk = new HashMap<String, String>();
 
     public synchronized void newUser(String userName, String publicKey) {
