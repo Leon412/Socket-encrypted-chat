@@ -1,12 +1,12 @@
-import java.time.LocalDateTime;             //libreria per utilizzo della data
-import java.time.format.DateTimeFormatter;      //libreria per permettere la formattazione della data
+import java.time.LocalDateTime;                     //libreria per utilizzo della data
+import java.time.format.DateTimeFormatter;           //libreria per permettere la formattazione della data
 
 public class Message {
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //formato yy/MM/dd 
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //formato yy/MM/dd (opzionale)  ofpattern (HH:mm) = formatta in HH:mm
 
     private String encryptedMsg;                     //messaggio criptato
-    private String sender;                          //mittente
-    private LocalDateTime sendingDate;              //data del momento di invio
+    private String sender;                           //mittente
+    private LocalDateTime sendingDate;               //data del momento di invio
     
     //costruttore
     public Message(String sender, String msg, LocalDateTime sendingDate) {
