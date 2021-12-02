@@ -1,7 +1,7 @@
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.time.LocalDateTime;
+import java.util.HashMap;                   //libreria per utilizzo metodi mappe
+import java.util.LinkedList;                //libreria per utilizzo struttura dati LinkedList 
+import java.util.Queue;                     //libreria per uso di code
+import java.time.LocalDateTime;             //libreria per utilizzo di ore e minuti
 
 public class MessageBox {
     private HashMap<String, Queue<Message>> mb = new HashMap<String, Queue<Message>>();         //mappa che contiene i messaggi, con indice = ricevente
