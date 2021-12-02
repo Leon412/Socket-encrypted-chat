@@ -1,6 +1,6 @@
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.util.Base64;
+import java.util.Base64;                        //libreria per codificare e decodificare in base 64
 
 public class RSA {
     public static int maxChars(String key){
