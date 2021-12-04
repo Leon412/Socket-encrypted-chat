@@ -1,15 +1,16 @@
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.util.Base64;
+import java.util.Base64;                        //libreria per codificare e decodificare in base 64
 
 public class RSA {
+    //funzione che restituisce il numero massimo di caratteri che possono essere criptati in una volta
     public static int maxChars(String key){
-        BigInteger modulus = new BigInteger(new String(Base64.getDecoder().decode(key.substring(key.indexOf("-") + 1))));
-        return (modulus.bitLength() / 8) - 1;
+        BigInteger modulus = new BigInteger(new String(Base64.getDecoder().decode(key.substring(key.indexOf("-") + 1))));      //prende n
+        return (modulus.bitLength() / 8) - 1;       //lunghezza di n
     }
     
     public static String encrypt(String message, String key){
-        String[] keyArray = key.split("-");
+        String[] keyArray = key.split("-");     
         BigInteger exponent = new BigInteger(new String(Base64.getDecoder().decode(keyArray[0])));
         BigInteger modulus = new BigInteger(new String(Base64.getDecoder().decode(keyArray[1])));
         //Spezza la chiave in esponente e modulo e li decodifica da Base64 in BigInteger

@@ -1,12 +1,12 @@
-import java.net.*;
-import java.util.HashMap;
-import java.io.*;
+import java.net.*;       //libreria per socket
+import java.util.HashMap;       //libreria per utilizzo metodi mappe
+import java.io.*;            //libreria per gestire eccezzioni
 
 public class ServerThread extends Thread{
     private Socket s = null;
     private MessageBox mBox;
-    private HashMap<String, String> commandList = new HashMap<String, String>();
-    
+    private HashMap<String, String> commandList = new HashMap<String, String>();        //istanzio la mappa per poter istanziare la descrizione dei comandi
+                                                                                        //indice è il nome del comando, contenuto è la descrizione del comando
     private String clientKey = null;
     private String userName = null;
 
@@ -30,14 +30,15 @@ public class ServerThread extends Thread{
             PrintWriter out = new PrintWriter(s.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         ) {
-            do {
+            do {                                                                        //ciclo do while che aspetta che l'utente inserisca lo username senza spazi
+                                                                                        // e che non sia già presente nella lista
                 out.println("<Server> Scegli lo username (no spazi): ");
-                out.println("INPUT");
+                out.println("INPUT");       //invia al client il comando "INPUT"
                 userName = in.readLine();
             }while(userName.contains(" ") || mBox.contains(userName));
-            out.println("SENDKEY");
+            out.println("SENDKEY");     //invia al client il comando "SENDKEY"
             clientKey = in.readLine();
-            mBox.newUser(userName, clientKey);
+            mBox.newUser(userName, clientKey);      //inserisce un nuovo utente
             out.println("<Server> Benvenuto " + userName);
             //log in
             out.println("Digitare help per aiuto");

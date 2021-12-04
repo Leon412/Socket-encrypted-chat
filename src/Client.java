@@ -1,4 +1,4 @@
-import java.io.*;
+import java.io.*;       
 import java.net.*;
 
 public class Client {
@@ -12,12 +12,12 @@ public class Client {
         String toSend = null; //Stringa da mandare al server
         String response = null;
         String key = null;
-        
+
         try (
             Socket echoSocket = new Socket(hostName, portNumber);
-            PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));
-            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));
+            PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);                          //Scrivere nel Buffer del Server
+            BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream()));     //Leggere dal Buffer del Client
+            BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));                    //input da tastiera
         ) {
             System.out.println("Generazioni delle chiavi RSA in corso...");
             clientPair = generator.generateKeys(100); //genera le chiavi con numeri a tot cifre
@@ -60,26 +60,26 @@ public class Client {
                     out.println(toSend);
                 }
                 else if(response.equals("DECRYPT")) {
-                    response = in.readLine();
+                    response = in.readLine();                   //messaggio [ dataricevente contenuto ]
                     String responseArray[] = response.split(" ", 2);
                     responseArray[1] = RSA.decrypt(responseArray[1], clientPair.getPrivateKey());
-                    response = String.join(" ", responseArray);
+                    response = String.join(" ", responseArray);     //rimette insieme le stringe di responseArray
                     System.out.println(response);
                 }
                 else if(response.equals("SENDKEY")) {
-                    out.println(clientPair.getPublicKey());
+                    out.println(clientPair.getPublicKey());     //manda la sua chiave pubblica
                 }
                 else {
                     System.out.println(response);
                 }
             }
-            out.println("QUIT");
+            out.println("QUIT");        //lo mando al server per farmi rimandare QUIT e chiude
         } catch (UnknownHostException e) {
             System.err.println("Don't know about host " + hostName);
             System.exit(1);
         } catch (IOException e) {
             System.err.println("Couldn't get I/O for the connection to " + hostName);
             System.exit(1);
-        } 
+        }
     }
 }
