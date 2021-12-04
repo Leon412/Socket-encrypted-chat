@@ -22,9 +22,9 @@ public class MessageBox {
             System.out.println("problema grave");
         }
     }
-
+    //funzione che controlla se uno user ha messaggi
     public boolean hasMessageFor(String userName) {
-        if((!mb.containsKey(userName)) || (mb.get(userName).isEmpty()))
+        if((!mb.containsKey(userName)) || (mb.get(userName).isEmpty()))     //se il destinataerio non è presente, o la sua lista di messaggi ricevuti è vuota
             return false;
         return true;
     }
@@ -38,6 +38,7 @@ public class MessageBox {
         return mb.keySet().toString();          //restituisce la lista degli utenti e la trasforma in una stringa [nome, nome, ...]
     }
 
+    //classe che aggiunge un nuovo messaggio alla lista del ricevitore
     public synchronized boolean send(String receiver, String sender, String msg) {
         if(!mb.containsKey(receiver)){          //se non è presente il ricevitore a cui si fa riferimento restituisce falso
             return false;
