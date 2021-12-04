@@ -54,7 +54,7 @@ public class Client {
                         out.println(toSend);
                     }
                 }
-                else if(response.equals("INPUT")) {
+                else if(response.equals("INPUT")) {         //se il comando è   INPUT       
                     System.out.print("\r\n>");
                     toSend = stdIn.readLine();
                     out.println(toSend);
