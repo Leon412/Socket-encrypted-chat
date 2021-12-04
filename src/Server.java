@@ -1,6 +1,6 @@
 import java.net.*;                       //libreria per socket
 import java.util.ArrayList;              //libreria per arraylist
-import java.io.*;                        
+import java.io.*;                        //libreria per le eccezioni           
  
 public class Server {
     private static MessageBox mBox = new MessageBox();                                              //tabella di messaggi
