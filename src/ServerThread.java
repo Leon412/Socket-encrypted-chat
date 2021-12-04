@@ -41,7 +41,7 @@ public class ServerThread extends Thread{
             out.println("<Server> Benvenuto " + userName);
             //log in
             out.println("Digitare help per aiuto");
-            out.println("INPUT");
+            out.println("INPUTC");
             while(!(line = in.readLine()).equals("QUIT")) {
                 String lineArray[] = line.split(" ", 3);
                 System.out.println(lineArray[0]);
@@ -94,7 +94,7 @@ public class ServerThread extends Thread{
                     break;
                 case "quit":
                     out.println("sei sicuro? (s/n)");
-                    out.println("INPUTSN");
+                    out.println("INPUT");
                     if(in.readLine().charAt(0) == 's')
                         out.println("QUIT");
                     break;
@@ -102,10 +102,12 @@ public class ServerThread extends Thread{
                     out.println("<Server> comando non trovato");
                     break;
                 }
-                out.println("INPUT");
+                out.println("INPUTC");
             }
         } catch(IOException e) {
             e.printStackTrace();
         }
+        mBox.removeUser(userName);
+        Server.close(this);
     }
 }

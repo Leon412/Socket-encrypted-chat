@@ -16,9 +16,9 @@ public class Server {
         
         while(true) {
             try (
-                ServerSocket serverSocket = new ServerSocket(portNumber);                           //creazione socket
+                ServerSocket serverSocket = new ServerSocket(portNumber);                          //creazione socket
             ) {
-                Socket s = serverSocket.accept();                  
+                Socket s = serverSocket.accept();
                 threads.add(new ServerThread(s, mBox));                                            //aggiunge alla lista il thread
                 threads.get(threads.size()-1).start();                                             //fa partire l'ultimo thread                             
                 

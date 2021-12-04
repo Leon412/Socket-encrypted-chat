@@ -24,7 +24,7 @@ public class Client {
             maxChars = RSA.maxChars(clientPair.getPublicKey());
 
             while ((response = in.readLine()) != null && !response.equals("QUIT")) {
-                if(response.equals("INPUT")) {
+                if(response.equals("INPUTC")) {
                     System.out.print("\r\n>");
                     toSend = stdIn.readLine();
                     if(toSend.indexOf("send ") == 0) {
@@ -54,7 +54,8 @@ public class Client {
                         out.println(toSend);
                     }
                 }
-                else if(response.equals("INPUTSN")) {
+                else if(response.equals("INPUT")) {
+                    System.out.print("\r\n>");
                     toSend = stdIn.readLine();
                     out.println(toSend);
                 }

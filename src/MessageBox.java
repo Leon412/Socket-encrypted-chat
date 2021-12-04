@@ -12,8 +12,18 @@ public class MessageBox {
         pk.put(userName, publicKey);
     }
 
+    public synchronized void removeUser(String userName) {
+        if(mb.containsKey(userName)) {
+            mb.remove(userName);
+            pk.remove(userName);
+        }
+        else {
+            System.out.println("problema grave");
+        }
+    }
+
     public boolean hasMessageFor(String userName) {
-        if((!mb.containsKey(userName)) || (mb.get(userName).size() == 0))
+        if((!mb.containsKey(userName)) || (mb.get(userName).isEmpty()))
             return false;
         return true;
     }
