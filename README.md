@@ -1,5 +1,5 @@
 # Socket-encrypted-chat
-### Membri del progetto;
+### Membri del progetto:
 1. Panichi Leonardo (Leon421)
 2. Pesaresi Adriano (adrianopesaresi)
 3. Mazzaferro Sebastiano (SebastianoMazzaferro)
@@ -64,4 +64,4 @@ Classe che rappresenta l'utente che vuole comunicare.
 (Classe che accetta la connessione e fa partire il serverthread)
 
 #### ServerThread
-
+(La parte del server che risponde ai client)
