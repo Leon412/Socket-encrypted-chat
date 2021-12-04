@@ -23,14 +23,14 @@ public class Client {
             clientPair = generator.generateKeys(100); //genera le chiavi con numeri a tot cifre
             maxChars = RSA.maxChars(clientPair.getPublicKey());
 
-            while ((response = in.readLine()) != null && !response.equals("QUIT")) {
-                if(response.equals("INPUTC")) {
+            while ((response = in.readLine()) != null && !response.equals("QUIT")) {        //mentre l'inserimento non è nullo e non è QUIT
+                if(response.equals("INPUTC")) {     //input comando
                     System.out.print("\r\n>");
-                    toSend = stdIn.readLine();
-                    if(toSend.indexOf("send ") == 0) {
+                    toSend = stdIn.readLine();      //stringa che arriva dal server
+                    if(toSend.indexOf("send ") == 0) {      //se la prima parola che appare nella stringa è send
                         String toSendArray[] = toSend.split(" ", 3);
-                        if(toSendArray.length == 3) {
-                            out.println("getkey " + toSendArray[1]);
+                        if(toSendArray.length == 3) {       //se la stringa è composta da 3 parole
+                            out.println("getkey " + toSendArray[1]);        //invia getkey e lo user del quale prendere la chiave pubblica
                             key = in.readLine();
                             in.readLine();
                             if(!key.equals("<Server> sintassi errata") && toSendArray[2].length() <= maxChars) {
