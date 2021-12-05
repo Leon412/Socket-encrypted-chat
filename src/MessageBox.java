@@ -13,7 +13,7 @@ public class MessageBox {
     }
 
     public boolean hasMessageFor(String userName) {
-        if((!mb.containsKey(userName)) || (mb.get(userName).size() == 0))
+        if((!mb.containsKey(userName)) || (mb.get(userName).isEmpty()))
             return false;
         return true;
     }
