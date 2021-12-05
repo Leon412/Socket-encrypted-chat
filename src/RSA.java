@@ -1,16 +1,27 @@
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
-import java.util.Base64;                        //libreria per codificare e decodificare in base 64
+import java.util.Base64; //libreria per codificare e decodificare in base 64
+
+/**
+ * Nella classe RSA sono presenti i metodi per criptare e decriptare stringhe con l'algoritmo dell'RSA.
+ * Inoltre e' presente una funzione per controllare, partendo da una chiave, il massimo numero di caratteri in una stringa per essere criptabile con l'RSA.
+ * 
+ * @author Leonardo Panichi
+ */
 
 public class RSA {
-    //funzione che restituisce il numero massimo di caratteri che possono essere criptati in una volta
+    /** 
+     * Partendo dalla chiave con cui si deve criptare il messaggio, ritorna il massimo numero di caratteri in una stringa per essere criptabile con l'RSA.
+     * @param key La chiave di cui si vuole controllare il numero massimo di caratteri criptabili.
+     * @return Il numero massimo di caratteri criptabili.
+    */
     public static int maxChars(String key){
-        BigInteger modulus = new BigInteger(new String(Base64.getDecoder().decode(key.substring(key.indexOf("-") + 1))));      //prende n
-        return (modulus.bitLength() / 8) - 1;       //lunghezza di n
+        BigInteger modulus = new BigInteger(new String(Base64.getDecoder().decode(key.substring(key.indexOf("-") + 1)))); //Decifra e divide n dal resto della chiave
+        return (modulus.bitLength() / 8) - 1; //calcola il numero massimo di byte e quindi di caratteri che si possono criptare
     }
     
     public static String encrypt(String message, String key){
-        String[] keyArray = key.split("-");     
+        String[] keyArray = key.split("-");
         BigInteger exponent = new BigInteger(new String(Base64.getDecoder().decode(keyArray[0])));
         BigInteger modulus = new BigInteger(new String(Base64.getDecoder().decode(keyArray[1])));
         //Spezza la chiave in esponente e modulo e li decodifica da Base64 in BigInteger
@@ -22,7 +33,7 @@ public class RSA {
         }
         BigInteger IntMessage = new BigInteger(bytes);
         //converte la stringa message in numero usando l'UTF-8 per ogni carattere poi convertendolo usando il complemento a due per avere un singolo numero
-
+        
         if(IntMessage.compareTo(modulus.subtract(BigInteger.ONE)) >= 0)
             throw new ArithmeticException("Message too long for key lenght");
         //Se il numero dato dalla conversione da stringa di message e' piu' grande di N-1, ovvero del modulo usato per l'RSA, l'algoritmo non puo' funzionare quindi lancia un eccezione
