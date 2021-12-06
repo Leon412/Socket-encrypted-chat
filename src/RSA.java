@@ -4,7 +4,7 @@ import java.util.Base64; //Codifica e decodifica base64
 
 /**
  * Nella classe {@code RSA} sono presenti i metodi per criptare e decriptare stringhe con l'algoritmo RSA.
- * Inoltre e' presente una funzione per controllare, partendo da una chiave, il massimo numero di caratteri in una stringa per essere criptabile con l'algoritmo RSA.
+ * Inoltre e' presente una funzione per controllare, partendo da una chiave, il massimo numero di caratteri che una stringa puo' contenere per essere criptabile con l'algoritmo RSA.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
  */
 public class RSA {
