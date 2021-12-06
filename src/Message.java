@@ -1,20 +1,31 @@
-import java.time.LocalDateTime;                     //libreria per utilizzo della data
-import java.time.format.DateTimeFormatter;           //libreria per permettere la formattazione della data
+import java.time.LocalDateTime; //Data e tempo
+import java.time.format.DateTimeFormatter; //Formattazione di data e tempo
 
+/**
+ * La classe {@code Message} rappresenta un messaggio, memorizzandone il contenuto criptato, 
+ * lo userName del mandante e la data e ora del momento di invio.
+ * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ */
 public class Message {
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //formato yy/MM/dd (opzionale)  ofpattern (HH:mm) = formatta in HH:mm
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //Formattatore di data e ora
+                                                                          //ofpattern (HH:mm) = formatta in HH:mm
 
-    private String encryptedMsg;                     //messaggio criptato
-    private String sender;                           //mittente
-    private LocalDateTime sendingDate;               //data del momento di invio
+    private String encryptedMsg;       //Messaggio criptato
+    private String sender;             //Mandante
+    private LocalDateTime sendingDate; //Data e tempo del momento di invio
     
-    //costruttore
+    /**
+     * Costruttore di {@code Message}.
+     * @param sender Mandante del messaggio.
+     * @param msg Messaggio criptato.
+     * @param sendingDate Data e tempo del momento di invio.
+     */
     public Message(String sender, String msg, LocalDateTime sendingDate) {
         this.encryptedMsg = msg;
         this.sender = sender;
         this.sendingDate = sendingDate;
     }
-    //metodi set e get
+
     public String getMsg() {
         return encryptedMsg;
     }
@@ -39,7 +50,13 @@ public class Message {
         this.sendingDate = sendingDate;
     }
     
-    //metodo per formattare la data del messaggio
+    /**
+     * Formatta il messaggio in:
+     * <blockquote>
+     *    [HH:mm]&#60;mandante.> Messaggio criptato
+     * </blockquote>
+     * @return Il messaggio formattato.
+     */
     public String formattedMessage(){
         return "[" + dtf.format(sendingDate) + "]" + "<" + sender + "> " + encryptedMsg;
     }

@@ -1,59 +1,122 @@
-import java.util.HashMap;                   //libreria per utilizzo metodi mappe
-import java.util.LinkedList;                //libreria per utilizzo struttura dati LinkedList
-import java.util.Queue;                     //libreria per uso di code
-import java.time.LocalDateTime;             //libreria per utilizzo di ore e minuti
+import java.util.HashMap;       //Mappe
+import java.util.LinkedList;    //Struttura dati LinkedList
+import java.util.Queue;         //Code
+import java.time.LocalDateTime; //Data e tempo
 
+/**
+ * La classe {@code MessageBox} rappresenta una Message Box, memorizzando la Messagge Box vera e propia come una {@code HashMap} 
+ * con una {@code Queue} di {@code Message} come argomento e memorizzando la lista delle chiavi pubbliche come una {@code HashMap}.
+ * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ */
 public class MessageBox {
-    private HashMap<String, Queue<Message>> mb = new HashMap<String, Queue<Message>>();         //mappa che contiene i messaggi, con indice = ricevente
-    private HashMap<String, String> pk = new HashMap<String, String>();                         //mappa delle chiavi pubbliche, con inice lo username
+    private HashMap<String, Queue<Message>> mb = new HashMap<String, Queue<Message>>(); //Mappa con userName del ricevente come indice 
+                                                                                        //e coda di messaggi come argomento
+    private HashMap<String, String> pk = new HashMap<String, String>();                 //Mappa con userName dello user come indice e 
+                                                                                        //chiave pubblica come argomento
 
-    //metodo che inserisce un nuovo user
+    /**
+     * Inserisce un nuovo user nella message box, aprendo uno spazio per i messaggi che gli verranno inviati. 
+     * Inserisce anche la sua chiave pubblica nella mappa di chiavi pubbliche.
+     * <p>
+     * Questo metodo <b>e'</b> sincronizzato.
+     * @param userName UserName dello user.
+     * @param publicKey Chiave pubblica dello user.
+     */
     public synchronized void newUser(String userName, String publicKey) {
-        mb.put(userName, new LinkedList<>());           //inizializza la coda dei messaggi ricevuti dello user
-        pk.put(userName, publicKey);                    //inserisce nella mappa delle chiavi la chiave che viene inviata dal Client con il rispettivo user
+        mb.put(userName, new LinkedList<>()); //Inizializza, nella mappa dei messaggi, la coda dei messaggi ricevuti dello user
+        pk.put(userName, publicKey);          //Inserisce, nella mappa delle chiavi, la chiave pubblica dello user
     }
 
+    /**
+     * Rimuove uno user dalla mappa dei messaggi e dalla mappa delle chiavi pubbliche.
+     * <p>
+     * Questo metodo <b>e'</b> sincronizzato.
+     * @param userName UserName dello user.
+     */
     public synchronized void removeUser(String userName) {
         if(mb.containsKey(userName)) {
             mb.remove(userName);
             pk.remove(userName);
         }
         else {
-            System.out.println("problema grave");
+            System.out.println("problema");
         }
     }
-    //funzione che controlla se uno user ha messaggi
+
+    /**
+     * Controlla se uno user ha dei messaggi da ricevere.
+     * <p>
+     * Questo metodo <b>non e'</b> sincronizzato.
+     * @param userName UserName dello user.
+     * @return {@code true} se {@code userName} ha dei messaggi da ricevere.
+     */
     public boolean hasMessageFor(String userName) {
-        if((!mb.containsKey(userName)) || (mb.get(userName).isEmpty()))     //se il destinataerio non è presente, o la sua lista di messaggi ricevuti è vuota
+        if((!mb.containsKey(userName)) || (mb.get(userName).isEmpty())) //Se il destinatario non e' presente, o la sua coda di messaggi e' vuota
             return false;
         return true;
     }
 
-    //funzione che legge ed in seguito elimina l'ultimo messaggio nella lista dei messaggi ricevuti di user
+    /**
+     * Legge ed elimina l'ultimo messaggio dalla coda dei messaggi ricevuti dallo user.
+     * <p>
+     * Questo metodo <b>e'</b> sincronizzato.
+     * @param userName UserName dello user.
+     * @return L'ultimo messaggio nella cosa di {@code userName}.
+     */
     public synchronized Message getLastMessageFor(String userName) {
-        return mb.get(userName).poll();                                 //legge l'ultimo messaggio nella coda di username, poi lo elimina (.poll)
+        return mb.get(userName).poll();
     }
 
+    /**
+     * Prende la rappresentazione in stringa della lista degli utenti online.
+     * <blockquote><pre>
+     *    [userName1, userName2, ...]
+     * </pre></blockquote>
+     * <p>
+     * Questo metodo <b>non e'</b> sincronizzato.
+     * @return Lista degli utenti online.
+     */
     public String listUsers() {
-        return mb.keySet().toString();          //restituisce la lista degli utenti e la trasforma in una stringa [nome, nome, ...]
+        return mb.keySet().toString();
     }
 
-    //classe che aggiunge un nuovo messaggio alla lista del ricevitore
+    /**
+     * Aggiunge un messaggio alla lista del ricevitore.
+     * <p>
+     * Questo metodo <b>e'</b> sincronizzato.
+     * @param receiver Ricevente del messaggio.
+     * @param sender Mandante del messaggio.
+     * @param msg Contenuto del messaggio.
+     * @return {@code true} se l'invio e' andato a buon fine.
+     */
     public synchronized boolean send(String receiver, String sender, String msg) {
-        if(!mb.containsKey(receiver)){          //se non è presente il ricevitore a cui si fa riferimento restituisce falso
+        if(!mb.containsKey(receiver)) { //Se non è presente il ricevente a cui si fa riferimento
             return false;
         }
-        mb.get(receiver).add(new Message(sender, msg, LocalDateTime.now()));    //alla coda dei messaggi del ricevente aggiunge un nuovo messaggio
+        mb.get(receiver).add(new Message(sender, msg, LocalDateTime.now())); //Aggiunge un nuovo messaggio alla coda dei messaggi del ricevente
         return true;
     }
-
+    /**
+     * Controlla se esiste gia' un utente nella mappa con lo stesso username.
+     * <p>
+     * Questo metodo <b>non e'</b> sincronizzato.
+     * @param userName UserName che si vuole controllare.
+     * @return {@code true} se esiste gia' quello userName.
+     */
     public boolean contains(String userName) {
-        if(mb.containsKey(userName))               //controlla se esiste un utente nella mappa con lo username identificato con 'userName'
+        if(mb.containsKey(userName)) //Se esiste gia' un utente nella mappa con lo stesso username
             return true;
         return false;
     }
 
+    /**
+     * Ottiene la chiave pubblica di {@code userName}.
+     * <p>
+     * Questo metodo <b>non e'</b> sincronizzato.
+     * @param userName userName la quale chiave pubblica si vuole ottenere.
+     * @return La chiave pubblica di {@code userName}.
+     */
     public String getKey(String userName) {
-        return pk.get(userName);                //restituisce la chiave pubblica di 'userName'
+        return pk.get(userName);
     }
 }

@@ -15,16 +15,20 @@ public class KeyGenerator {
     Random rnd = new Random(); //Sorgente dei numeri random
 
     /**
-     * Costruisce usando {@code StringBuilder} un numero {@code BigInteger} casuale di {@code digits} cifre, generando una cifra alla volta e appendendole.
+     * Costruisce usando {@code StringBuilder} un numero {@code BigInteger} casuale di {@code digits} cifre, 
+     * generando una cifra alla volta e appendendole.
      * @param digits Numero di cifre del numero.
      * @return Un numero {@code BigInteger} casuale di {@code digits} cifre.
      */
     public BigInteger getRandomBigInteger(int digits) {
         StringBuilder sb = new StringBuilder(digits); //Costrutture di stringhe con grandezza digits
-        sb.append((char)('0' + rnd.nextInt(9) + 1)); //Genera un numero casuale da 1 a 9 (il primo non può essere zero senno' il numero finale avrebbe meno cifre di quelle specificate) e lo appende alla stringa
+        sb.append((char)('0' + rnd.nextInt(9) + 1));  //Genera un numero casuale da 1 a 9 
+                                                      //(il primo non può essere zero senno' il numero finale avrebbe meno cifre di quelle specificate) 
+                                                      //e lo appende alla stringa
         digits--;
 
-        //Continua a generare numeri casuali (da 0 a 9 questa volta) e ad appenderli alla stringa fino a che non arriva al numero di cifre specificato
+        //Continua a generare numeri casuali (da 0 a 9 questa volta) e ad appenderli 
+        //alla stringa fino a che non arriva al numero di cifre specificato
         for(int i = 0; i < digits; i++)                         
             sb.append((char)('0' + rnd.nextInt(10))); 
         return new BigInteger(sb.toString());

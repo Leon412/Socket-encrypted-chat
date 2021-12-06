@@ -3,7 +3,8 @@ import java.util.ArrayList;
 import java.io.IOException;
 
 /**
- * La classe {@code Server} serve ad intercettare le connessioni dei client ed inizializzare un ServerThread quando la connessione viene accettata.
+ * La classe {@code Server} serve ad intercettare le connessioni dei client 
+ * ed inizializzare un ServerThread quando la connessione viene accettata.
  * <p>
  * Vengono memorizzati i thread avviati dal server e la tabella dei messaggi.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
