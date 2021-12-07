@@ -57,7 +57,7 @@ public class Message {
      * </blockquote>
      * @return Il messaggio formattato.
      */
-    public String formattedMessage(){
+    public String getFormattedMessage(){
         return "[" + dtf.format(sendingDate) + "]" + "<" + sender + "> " + encryptedMsg;
     }
 }

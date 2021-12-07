@@ -1,4 +1,6 @@
 import java.math.BigInteger;
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.util.Base64;
 import java.util.Random;
 
@@ -12,18 +14,41 @@ import java.util.Random;
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
  */
 public class KeyGenerator {
-    Random rnd = new Random(); //Sorgente dei numeri random
+
+    /**
+     * Genera un numero {@code BigInteger} casuale a {@code numBits} bits.
+     * Piu' specificatamente tra {@code 2^(numBits - 1)} e {@code 2^(numBits)}.
+     * @param numBits Numero di bit del numero casuale.
+     * @return un numero casuale a {@code numBits} bits.
+     */
+    private static BigInteger getRandomBigIntegerBits(int numBits) {
+        numBits--;
+        int numBytes = (int)(((long)numBits+7)/8);
+        byte[] randomBits = new byte[numBytes];
+        if (numBytes > 0) {
+            try {
+                SecureRandom.getInstanceStrong().nextBytes(randomBits);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            int excessBits = 8*numBytes - numBits;
+            randomBits[0] &= (1 << (8-excessBits)) - 1;
+        }
+        return new BigInteger(1, randomBits).add(BigInteger.TWO.pow(numBits));
+    }
 
     /**
      * Costruisce usando {@code StringBuilder} un numero {@code BigInteger} casuale di {@code digits} cifre, 
      * generando una cifra alla volta e appendendole.
      * @param digits Numero di cifre del numero.
+     * @param rnd Sorgente random.
      * @return Un numero {@code BigInteger} casuale di {@code digits} cifre.
      */
-    public BigInteger getRandomBigInteger(int digits) {
+    public BigInteger getRandomBigInteger(int digits, Random rnd) {
         StringBuilder sb = new StringBuilder(digits); //Costrutture di stringhe con grandezza digits
         sb.append((char)('0' + rnd.nextInt(9) + 1));  //Genera un numero casuale da 1 a 9 
-                                                      //(il primo non può essere zero senno' il numero finale avrebbe meno cifre di quelle specificate) 
+                                                      //(il primo non può essere zero altrimenti il numero finale avrebbe 
+                                                      //meno cifre di quelle specificate) 
                                                       //e lo appende alla stringa
         digits--;
 
@@ -50,18 +75,19 @@ public class KeyGenerator {
 
     /**
      * Genera una chiave pubblica e una privata per essere usati nella criptazione e decriptazione con l'algoritmo RSA.
-     * @param digits Numero di cifre dei numeri primi iniziali con i quali si trovano le chiavi.
-     * @return Un {@link KeyPair} con chiave pubblica e privata.
+     * @param numBits Numero di bit del modulo delle chiavi. Assume numBits maggiore di 1. Meglio se 16 o maggiore e pari.
+     * @return Un {@link KeyPair} con chiave pubblica e privata con modulo a {@code numBits} bits.
      * @see {@link RSA}
      */
-    public KeyPair generateKeys(int digits) {
-        BigInteger p = getFirstPrime(getRandomBigInteger(digits)); //Numero primo p
-        BigInteger q = getFirstPrime(getRandomBigInteger(digits)); //Numero primo q
-        BigInteger e = getFirstPrime(getRandomBigInteger(digits)); //Esponente pubblico | più piccolo di N e primo rispetto a z
+    public KeyPair generateKeys(int numBits) {
+        numBits = numBits / 2;
+        BigInteger p = getFirstPrime(getRandomBigIntegerBits(numBits)); //Numero primo p
+        BigInteger q = getFirstPrime(getRandomBigIntegerBits(numBits)); //Numero primo q
+        BigInteger e = getFirstPrime(getRandomBigIntegerBits(numBits)); //Esponente pubblico | più piccolo di N e primo rispetto a z
         BigInteger n = p.multiply(q); //Modulo | N = p * q
         BigInteger z = (p.subtract(BigInteger.ONE)).multiply((q.subtract(BigInteger.ONE))); //Funzione di Eulero di N | (p – 1) * (q – 1)
         BigInteger d = e.modInverse(z); //Esponente privato | tale che e * d –> 1mod((p – 1) * (q – 1))
-        
+
         //Codifica le parti delle chiavi in Base64
         String nBase64 = Base64.getEncoder().encodeToString(n.toString().getBytes());   
         String eBase64 = Base64.getEncoder().encodeToString(e.toString().getBytes());

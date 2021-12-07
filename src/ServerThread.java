@@ -1,115 +1,170 @@
-import java.net.*;       //libreria per socket
-import java.util.HashMap;       //libreria per utilizzo metodi mappe
-import java.io.*;            //libreria per gestire eccezzioni
+import java.net.*;        //Socket
+import java.io.*;         //PrintWriter|BufferedReader|InputStreamReader|IOException
+import java.util.HashMap; //Mappe
 
+/**
+ * La classe {@code ServerThread} rappresenta un thread di esecuzione di {@link Server}.
+ * Contiene il riferimento alla {@code MessageBox} e alla Mappa dei comandi di {@code Server}.
+ * <p>
+ * Il thread esegue il log in di uno user utilizzando solo uno userName, prende la chiave pubblica del client e aggiunge lo user alla {@code MessageBox}.
+ * Il programma poi entra in un ciclo di risposta ai comandi inviati dal client che finisce con il comando {@code quit}.
+ * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ */
 public class ServerThread extends Thread{
-    private Socket s = null;
-    private MessageBox mBox;
-    private HashMap<String, String> commandList = new HashMap<String, String>();        //istanzio la mappa per poter istanziare la descrizione dei comandi
-                                                                                        //indice è il nome del comando, contenuto è la descrizione del comando
-    private String clientKey = null;
+    private Socket s;                            //Socket con la connessione ad un client
+    private MessageBox mBox;                     //MessageBox contenente mappe di messaggi e chiavi pubbliche per ogni User       
+    private HashMap<String, String> commandList; //Mappa delle descrizione dei comandi
+
     private String userName = null;
-
-    {
-        commandList.put("list", "Visualizza la lista dei possibili riceventi\r\n\r\nLIST");
-        commandList.put("send", "Invia un messaggio alla persona indicata\r\n\r\nSEND [destinatario] [messaggio]");
-        commandList.put("receive", "Scrive i messaggi indirizzati a te\r\n\r\nRECEIVE");
-        commandList.put("getkey", "Scrive la chiave dello user specificato\r\n\r\nGETKEY");
-        commandList.put("quit", "Esce dal programma\r\n\r\nQUIT");
-        commandList.put("help", "Fornisce la guida per i comandi\r\n\r\nHELP [comando]\r\n\r\n\tcomando - visualizza informazioni di guida per il comando.");
-    }
-
-    public ServerThread(Socket s, MessageBox mBox) {
-        this.s=s;
+    private String clientKey = null;
+    
+    /**
+     * Costruttore di {@code ServerThread}.
+     * @param s Un {@code Socket} con la connessione ad un client.
+     * @param mBox Una {@code MessageBox} contenente messaggi e chiavi pubbliche degli user.
+     * @param commandList Una {@code HashMap} contenente i comandi che il client puo' utilizzare con le loro descrizioni.
+     */
+    public ServerThread(Socket s, MessageBox mBox, HashMap<String, String> commandList) {
+        this.s = s;
         this.mBox = mBox;
+        this.commandList = commandList;
     }
 
+    /**
+     * La parte del server che legge e risponde ad un client.
+     * <p>
+     * Esegue il log in utilizzando solo uno userName, prende la chiave pubblica del client e aggiunge lo user alla {@code MessageBox}.
+     * Poi il programma entra in un ciclo di risposta ai comandi inviati dal client che finisce quando il client si disconnette.
+     * <p>
+     * Il protocollo per la comunicazione tra server e client usato prevede che all'invio di specifici comandi 
+     * da parte del server, il client risponda in un certo modo.
+     * I comandi sono:
+     * <ul>
+     *    <li>INPUT - Chiede al client di inviargli un input dell'utente</li>
+     *    <li>INPUTC - Chiede al client di inviargli un comando</li>
+     *    <li>DECRYPT - Segnala al client che il prossimo messaggio che gli verra' inviato sara' criptato</li>
+     *    <li>SENDKEY - Chiede al client di inviargli la sua chiave pubblica</li>
+     * </ul>
+     */
     public void run() {
         String line = null;
+
         try(
-            PrintWriter out = new PrintWriter(s.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream()));
+            PrintWriter out = new PrintWriter(s.getOutputStream(), true); //Scrive nel Buffer del Client
+            BufferedReader in = new BufferedReader(new InputStreamReader(s.getInputStream())); //Legge il Buffer del Server
         ) {
-            do {                                                                        //ciclo do while che aspetta che l'utente inserisca lo username senza spazi
-                                                                                        // e che non sia già presente nella lista
+            //Procedura di log in, con solo uno username
+            //Lo username deve essere senza spazi e non già presente nel Server
+            do {                                                                        
                 out.println("<Server> Scegli lo username (no spazi): ");
-                out.println("INPUT");       //invia al client il comando "INPUT"
+                out.println("INPUT");
                 userName = in.readLine();
             }while(userName.contains(" ") || mBox.contains(userName));
-            out.println("SENDKEY");     //invia al client il comando "SENDKEY"
+
+            //Chiede al client di mandargli la sua chiave privata
+            out.println("SENDKEY");
             clientKey = in.readLine();
-            mBox.newUser(userName, clientKey);      //inserisce un nuovo utente
+
+            //Aggiunge lo user (userName e chiave pubblica) alla MessageBox completando la procedura di log in
+            mBox.newUser(userName, clientKey);
+
+            //Invia il benvenuto all'utente
+            System.out.println(userName + " connected");
             out.println("<Server> Benvenuto " + userName);
-            //log in
             out.println("Digitare help per aiuto");
             out.println("INPUTC");
-            while(!(line = in.readLine()).equals("QUIT")) {     //ciclo do while che termina quando l'utente inserisce il comando "QUIT"
-                String lineArray[] = line.split(" ", 3);        //inserimento in un array della stringa inviata dal client divisa ad ogni spazio per massimo 3 volte
-                System.out.println(lineArray[0]);               //stampa comando sul server
-                switch (lineArray[0].toLowerCase()) {       //switch comando
-                    case "list":                                //caso: il comando è list
-                    out.println(mBox.listUsers());           //invia la lista degli utenti disponibili
+
+            //Ciclo in cui il client invia un comando e il server lo compie e in caso manda una risposta al client
+            //Termina quando riceve null ovvero quando l'utente si disconnette
+            while((line = in.readLine()) != null) {
+                String lineArray[] = line.split(" ", 3); //Divide la stringa inviata dal client ad ogni spazio per massimo 3 volte
+                System.out.println(userName + " -> " + lineArray[0]);        //Stampa comando sul server
+
+                //Controlla se il comando immesso dallo user esiste, se esiste lo esegue
+                switch (lineArray[0].toLowerCase()) {
+                    //Invia al client la lista degli utenti online
+                    case "list":
+                        out.println(mBox.listUsers());
                     break;
-                    case "send":            //caso: il comando è send
-                    if(lineArray.length < 3) {            //se l'utente non ha scritto nel formato [comando destinatario messaggio]  
-                                                            
+
+                    //Invia il messaggio al suo destinatario
+                    case "send":
+                    if(lineArray.length < 3) { //Se l'utente non ha scritto il comando nel formato [comando destinatario messaggio]    
                         out.println("<Server> sintassi errata");
                     }
-                    else if(!mBox.send(lineArray[1], userName, lineArray[2])) {             //se non invia il messaggio
+                    else if(!mBox.send(lineArray[1], userName, lineArray[2])) { //Se non riesce ad inviare il messaggio
                         out.println("<Server> si e' verificato un errore con l'invio");
                     }
                     break;
-                case "receive":                                //caso: il comando è receive
-                    if(mBox.hasMessageFor(userName)) {         //se ci sono messaggi per quello user
-                        do {            
-                            out.println("DECRYPT");             //invia il comando DECRYPT
-                            out.println(mBox.getLastMessageFor(userName).formattedMessage()); //invia al client l'ultimo messaggio ricevuto dal corrispetivo utente formattato correttamente
-                        }while(mBox.hasMessageFor(userName));       //finchè ci sono messaggi per quell'utente
-                    }
-                    else {
-                        out.println("<Server> nessun nuovo messaggio :(");
-                    }
+
+                    //Invia al client i messaggi ricevuti
+                    case "receive":
+                        if(mBox.hasMessageFor(userName)) { //Se ci sono messaggi per quello user
+                            //Finchè ci sono messaggi per quello user invia al client l'ultimo messaggio ricevuto dal corrispetivo utente
+                            do {            
+                                out.println("DECRYPT");
+                                out.println(mBox.getLastMessageFor(userName).getFormattedMessage());
+                            }while(mBox.hasMessageFor(userName));
+                        }
+                        else
+                            out.println("<Server> nessun nuovo messaggio :(");
                     break;
-                    case "getkey":          //caso: getkey
-                    if(lineArray.length < 2) {      //se l'utente non ha scritto nel formato [comando username]  
-                        out.println("<Server> sintassi errata");
-                    }
-                    else if(mBox.getKey(lineArray[1]) != null) {   //quando esiste lo username del quale si richiede la chiave     
-                        out.println(mBox.getKey(lineArray[1]));     //invia la chiave dello username al client
-                    }
-                    else {
-                        out.println("<Server> username non trovato");
-                    }
+
+                    //Invia al client la chiave pubblica dell'utente richiesto
+                    case "getkey":
+                        if(lineArray.length < 2) { //Se l'utente non ha scritto nel formato [comando username]  
+                            out.println("<Server> sintassi errata");
+                        }
+                        else if(mBox.getKey(lineArray[1]) != null) { //Se esiste lo username del quale si richiede la chiave
+                            out.println(mBox.getKey(lineArray[1])); //Invia la chiave
+                        }
+                        else {
+                            out.println("<Server> username non trovato");
+                        }
                     break;
-                    case "help":             //caso: help
-                    if(lineArray.length < 2) {  //se l'utente ha inserito solo help 
-                        out.println("Per ulteriori informazioni su uno specifico comando, digitare HELP nome comando.\r\nLIST\tVisualizza la lista dei possibili riceventi\r\nSEND\tInvia una messaggio alla persona indicata\r\nRECEIVE\tScrive i messaggi indirizzati a te\r\nGETKEY\tScrive la chiave dello user specificato\r\nQUIT\tEsce dal programma\r\nHELP\tFornisce la guida per i comandi");
-                    }
-                    else {
-                        if(commandList.get(lineArray[1]) != null) {   //se esiste il comando 
-                            out.println(commandList.get(lineArray[1].toLowerCase()));   //invia la descrizione del comando al client
+
+                    //Invia al client la guida dei comandi
+                    case "help":
+                        if(lineArray.length < 2) { //Se l'utente ha inserito solo help
+                            out.println("Per ulteriori informazioni su uno specifico comando, digitare HELP nome comando.\r\n"
+                                    + "LIST\tVisualizza la lista dei possibili riceventi\r\n"
+                                    + "SEND\tInvia un messaggio criptato alla persona indicata\r\n"
+                                    + "RECEIVE\tScrive i messaggi indirizzati a te\r\n"
+                                    + "GETKEY\tScrive la chiave dello user specificato\r\n"
+                                    + "QUIT\tEsce dal programma\r\n"
+                                    + "HELP\tFornisce la guida per i comandi");
+                        }
+                        else if (commandList.get(lineArray[1]) != null) { //Se il comando esiste
+                            out.println(commandList.get(lineArray[1].toLowerCase())); //Prende la descrizione del comando inserito
                         }
                         else {
                             out.println("Comando non supportato dalla utilità di Guida");
                         }
-                    }
                     break;
-                    case "quit":        //caso: quit
-                    out.println("sei sicuro? (s/n)");
-                    out.println("INPUT");
-                    if(in.readLine().charAt(0) == 's')  //se la risposta inizia con s allora viene eseguito il quit
-                        out.println("QUIT");
+
+                    //Esce dal programma
+                    case "quit":
+                        out.println("sei sicuro? (s/n)");
+                        out.println("INPUT");
+                        if(in.readLine().charAt(0) == 's') //Se la risposta inizia con s
+                            out.println("QUIT");
                     break;
-                default:
-                    out.println("<Server> comando non trovato");
+
+                    //Se non esiste il comando inserito
+                    default:
+                        out.println("<Server> comando non trovato");
                     break;
                 }
                 out.println("INPUTC");      
             }
-        } catch(IOException e) {
-            e.printStackTrace();
+        } catch(IOException e) { //Problemi di connessione, probabilmente il client che si scollega
+            System.out.println(userName + ": Exception caught when trying to listen on port " + s.getPort() + " or listening for a connection");
+            System.out.println(userName + ": " + e.getMessage());
         }
-        mBox.removeUser(userName);      //quando il client si disconnette rimuove le informazioni dell'utente e termina il thread
+
+        //Quando il client si disconnette rimuove le informazioni dell'utente e termina il thread
+        System.out.println(userName + " disconnected");
+        mBox.removeUser(userName);
         Server.close(this);
     }
 }
