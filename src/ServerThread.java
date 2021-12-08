@@ -1,3 +1,28 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2021 Leonardo Panichi
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+
 import java.net.*;        //Socket
 import java.io.*;         //PrintWriter|BufferedReader|InputStreamReader|IOException
 import java.util.HashMap; //Mappe
@@ -59,7 +84,7 @@ public class ServerThread extends Thread{
                 out.println("<Server> Scegli lo username (no spazi): ");
                 out.println("INPUT");
                 userName = in.readLine();
-            }while(userName.contains(" ") || mBox.contains(userName));
+            }while(userName.contains(" ") || mBox.contains(userName) || userName.equals("Server"));
 
             //Chiede al client di mandargli la sua chiave privata
             out.println("SENDKEY");
@@ -127,10 +152,10 @@ public class ServerThread extends Thread{
                     case "help":
                         if(lineArray.length < 2) { //Se l'utente ha inserito solo help
                             out.println("Per ulteriori informazioni su uno specifico comando, digitare HELP nome comando.\r\n"
-                                    + "LIST\tVisualizza la lista dei possibili riceventi\r\n"
+                                    + "LIST\tVisualizza la lista degli utenti online\r\n"
                                     + "SEND\tInvia un messaggio criptato alla persona indicata\r\n"
                                     + "RECEIVE\tScrive i messaggi indirizzati a te\r\n"
-                                    + "GETKEY\tScrive la chiave dello user specificato\r\n"
+                                    + "GETKEY\tScrive la chiave dell'utente specificato\r\n"
                                     + "QUIT\tEsce dal programma\r\n"
                                     + "HELP\tFornisce la guida per i comandi");
                         }

@@ -1,3 +1,28 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2021 Leonardo Panichi
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -38,6 +63,9 @@ public class KeyGenerator {
     }
 
     /**
+     * <b>Not implemented</b> <i>Questo metodo e' stato rimpiazzato nella generazione delle chiavi da {@code getRandomBigIntegerBits} 
+     * che permette di scegliere il numero di bit invece del numero di cifre del numero.</i>
+     * <p>
      * Costruisce usando {@code StringBuilder} un numero {@code BigInteger} casuale di {@code digits} cifre, 
      * generando una cifra alla volta e appendendole.
      * @param digits Numero di cifre del numero.
@@ -60,7 +88,7 @@ public class KeyGenerator {
     }
     
     /**
-     * Trova il numero primo maggiore e piu' vicino a {@code number} usando il piccolo teorema di Fermat.
+     * Trova il numero primo maggiore e piu' vicino a {@code number} usando il piccolo teorema di Fermat per verificare la primalita'.
      * @param number Il numero di cui si vuole trovare il numero primo maggiore piu' vicino ad esso.
      * @return Il numero primo maggiore e piu' vicino a {@code number}.
      * @see <a href="https://it.wikipedia.org/wiki/Piccolo_teorema_di_Fermat">Wikipedia: Piccolo teorema di Fermat</a>

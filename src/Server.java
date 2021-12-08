@@ -1,3 +1,28 @@
+/**
+ * MIT License
+ *
+ * Copyright (c) 2021 Leonardo Panichi
+
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
+ * 
+ */
+
 import java.net.*;        //Socket
 import java.util.HashMap; //Mappe
 import java.util.ArrayList;
@@ -34,9 +59,9 @@ public class Server {
 
         //Aggiunge le descrizioni dei comandi disponibili alla mappa dei comandi
         commandList.put("list", "Visualizza la lista dei possibili riceventi\r\n\r\nLIST");
-        commandList.put("send", "Invia un messaggio criptato alla persona indicata\r\n\r\nSEND [destinatario] [messaggio]\r\n\r\n\tdestinatario - username di un utente online\r\n\tmessaggio - messaggio da inviare");
+        commandList.put("send", "Visualizza la lista degli utenti online\r\n\r\nSEND [destinatario] [messaggio]\r\n\r\n\tdestinatario - username di un utente online\r\n\tmessaggio - messaggio da inviare");
         commandList.put("receive", "Scrive i messaggi indirizzati a te\r\n\r\nRECEIVE");
-        commandList.put("getkey", "Scrive la chiave dello user specificato\r\n\r\nGETKEY");
+        commandList.put("getkey", "Scrive la chiave pubblica dell'utente specificato\r\n\r\nGETKEY");
         commandList.put("quit", "Esce dal programma\r\n\r\nQUIT");
         commandList.put("help", "Fornisce la guida per i comandi\r\n\r\nHELP [comando]\r\n\r\n\tcomando - visualizza informazioni di guida per il comando.");
         
