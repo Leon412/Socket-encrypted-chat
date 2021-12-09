@@ -34,6 +34,7 @@ import java.util.HashMap; //Mappe
  * Il thread esegue il log in di uno user utilizzando solo uno userName, prende la chiave pubblica del client e aggiunge lo user alla {@code MessageBox}.
  * Il programma poi entra in un ciclo di risposta ai comandi inviati dal client che finisce con il comando {@code quit}.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
  */
 public class ServerThread extends Thread{
     private Socket s;                            //Socket con la connessione ad un client
