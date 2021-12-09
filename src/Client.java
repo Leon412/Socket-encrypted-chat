@@ -30,6 +30,7 @@ import java.io.*;  //PrintWriter|BufferedReader|InputStreamReader|IOException
  * La classe {@code Client} rappresenta uno user del programma, riceve comandi di protocollo per la 
  * comunicazione dal server e quando consentito invia i suoi comandi del programma.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
  */
 public class Client {
 
