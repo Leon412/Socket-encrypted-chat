@@ -30,6 +30,7 @@ import java.time.format.DateTimeFormatter; //Formattazione di data e tempo
  * La classe {@code Message} rappresenta un messaggio, memorizzandone il contenuto criptato, 
  * lo userName del mandante e la data e ora del momento di invio.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
  */
 public class Message {
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm"); //Formattatore di data e ora
