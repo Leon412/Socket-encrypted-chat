@@ -53,7 +53,7 @@ public class KeyGenerator {
         byte[] randomBits = new byte[numBytes];
         if (numBytes > 0) {
             try {
-                SecureRandom.getInstanceStrong().nextBytes(randomBits);             //riempie l'array di bytes casuali
+                SecureRandom.getInstanceStrong().nextBytes(randomBits); //riempie l'array di bytes casuali
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
