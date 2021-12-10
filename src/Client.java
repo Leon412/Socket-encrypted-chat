@@ -40,14 +40,14 @@ public class Client {
                 + "                                                      // \\           \t\033[0m\n\033[46;30m"
                 + "                                                      \\\\_/ //        \t\033[0m\n\033[46;30m"
                 + "                                     '-.._.-''-.._.. -(||)(')        \t\033[0m\n\033[46;30m"
-                + "                                                       '''           \t");
-        System.out.println(""
-                + "\033[90m███████╗\033[93m █████╗ \033[90m███████╗\033[93m   ██╗    \033[90m███╗   ██╗\033[93m███████╗\033[90m███████╗\033[93m████████╗\033[40m\n"
+                + "                                                       '''           \t\033[0m");
+        System.out.println("\033[46;30m"
+                + "\033[90m███████╗\033[93m █████╗ \033[90m███████╗\033[93m   ██╗    \033[90m███╗   ██╗\033[93m███████╗\033[90m███████╗\033[93m████████╗\033[0m\n\033[40m"
                 + "\033[90m██╔════╝\033[93m██╔══██╗\033[90m██╔════╝\033[93m   ██║    \033[90m████╗  ██║\033[93m██╔════╝\033[90m██╔════╝\033[93m╚══██╔══╝\033[0m\n\033[40m"
                 + "\033[90m███████╗\033[93m███████║\033[90m█████╗  \033[93m   ██║    \033[90m██╔██╗ ██║\033[93m█████╗  \033[90m███████╗\033[93m   ██║   \033[0m\n\033[40m"
                 + "\033[90m╚════██║\033[93m██╔══██║\033[90m██╔══╝\033[93m██   ██║    \033[90m██║╚██╗██║\033[93m██╔══╝  \033[90m╚════██║\033[93m   ██║   \033[0m\n\033[40m"
                 + "\033[90m███████║\033[93m██║  ██║\033[90m██║   \033[93m╚█████╔╝    \033[90m██║ ╚████║\033[93m███████╗\033[90m███████║\033[93m   ██║   \033[0m\n\033[40m"
-                + "\033[90m╚══════╝\033[93m╚═╝  ╚═╝\033[90m╚═╝   \033[93m ╚════╝     \033[90m╚═╝  ╚═══╝\033[93m╚══════╝\033[90m╚══════╝\033[93m   ╚═╝   \n\033[0m\n");
+                + "\033[90m╚══════╝\033[93m╚═╝  ╚═╝\033[90m╚═╝   \033[93m ╚════╝     \033[90m╚═╝  ╚═══╝\033[93m╚══════╝\033[90m╚══════╝\033[93m   ╚═╝   \033[0m\n");
     }
 
     /**
@@ -65,13 +65,14 @@ public class Client {
         String response = null; //Stringa della risposta del server
         String key = null;      //Chiave pubblica dell'ultima persona a cui si e' mandato un messaggio
 
+        printSafjNest();
+
         try (
             Socket echoSocket = new Socket(hostName, portNumber);                                       //Si connette al Server
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);                      //Scrive nel Buffer del Server
             BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream())); //Legge il Buffer del Client
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));                //Input da tastiera
         ) {
-            printSafjNest();
             System.out.println("Generazioni delle chiavi RSA in corso...");
             clientPair = generator.generateKeys(2048); //Genera le chiavi a bit specificati
             maxChars = RSA.maxChars(clientPair.getPublicKey());
