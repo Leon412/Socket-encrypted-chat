@@ -33,6 +33,22 @@ import java.io.*;  //PrintWriter|BufferedReader|InputStreamReader|IOException
  */
 public class Client {
 
+    private static void printSafjNest() {
+        System.out.println("\033[46;30m "
+                + "                                                      __            \t\033[0m\n\033[46;30m"
+                + "                                                      // \\           \t\033[0m\n\033[46;30m"
+                + "                                                      \\\\_/ //        \t\033[0m\n\033[46;30m"
+                + "                                     '-.._.-''-.._.. -(||)(')        \t\033[0m\n\033[46;30m"
+                + "                                                       '''           \t");
+        System.out.println(""
+                + "\033[90m███████╗\033[93m █████╗ \033[90m███████╗\033[93m   ██╗    \033[90m███╗   ██╗\033[93m███████╗\033[90m███████╗\033[93m████████╗\033[40m\n"
+                + "\033[90m██╔════╝\033[93m██╔══██╗\033[90m██╔════╝\033[93m   ██║    \033[90m████╗  ██║\033[93m██╔════╝\033[90m██╔════╝\033[93m╚══██╔══╝\033[0m\n\033[40m"
+                + "\033[90m███████╗\033[93m███████║\033[90m█████╗  \033[93m   ██║    \033[90m██╔██╗ ██║\033[93m█████╗  \033[90m███████╗\033[93m   ██║   \033[0m\n\033[40m"
+                + "\033[90m╚════██║\033[93m██╔══██║\033[90m██╔══╝\033[93m██   ██║    \033[90m██║╚██╗██║\033[93m██╔══╝  \033[90m╚════██║\033[93m   ██║   \033[0m\n\033[40m"
+                + "\033[90m███████║\033[93m██║  ██║\033[90m██║   \033[93m╚█████╔╝    \033[90m██║ ╚████║\033[93m███████╗\033[90m███████║\033[93m   ██║   \033[0m\n\033[40m"
+                + "\033[90m╚══════╝\033[93m╚═╝  ╚═╝\033[90m╚═╝   \033[93m ╚════╝     \033[90m╚═╝  ╚═══╝\033[93m╚══════╝\033[90m╚══════╝\033[93m   ╚═╝   \n\033[0m\n");
+    }
+
     /**
      * Si connette al server, genera le chiavi per l'RSA
      * poi rispetta i comandi di protocollo del server.
@@ -54,6 +70,7 @@ public class Client {
             BufferedReader in = new BufferedReader(new InputStreamReader(echoSocket.getInputStream())); //Legge il Buffer del Client
             BufferedReader stdIn = new BufferedReader(new InputStreamReader(System.in));                //Input da tastiera
         ) {
+            printSafjNest();
             System.out.println("Generazioni delle chiavi RSA in corso...");
             clientPair = generator.generateKeys(2048); //Genera le chiavi a bit specificati
             maxChars = RSA.maxChars(clientPair.getPublicKey());
