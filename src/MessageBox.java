@@ -32,6 +32,7 @@ import java.time.LocalDateTime; //Data e tempo
  * La classe {@code MessageBox} rappresenta una Message Box, memorizzando la Messagge Box vera e propia come una {@code HashMap} 
  * con una {@code Queue} di {@code Message} come argomento e memorizzando la lista delle chiavi pubbliche come una {@code HashMap}.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
  */
 public class MessageBox {
     private HashMap<String, Queue<Message>> mb = new HashMap<String, Queue<Message>>(); //Mappa con userName del ricevente come indice 

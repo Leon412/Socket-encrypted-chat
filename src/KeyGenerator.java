@@ -37,6 +37,7 @@ import java.util.Random;
  *    chiave = esponenteInBase64 + "-" + moduloInBase64;
  * </pre></blockquote>
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
+ * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
  */
 public class KeyGenerator {
 
@@ -52,7 +53,7 @@ public class KeyGenerator {
         byte[] randomBits = new byte[numBytes];
         if (numBytes > 0) {
             try {
-                SecureRandom.getInstanceStrong().nextBytes(randomBits);
+                SecureRandom.getInstanceStrong().nextBytes(randomBits); //riempie l'array di bytes casuali
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }
