@@ -35,8 +35,8 @@ import java.io.*;  //PrintWriter|BufferedReader|InputStreamReader|IOException
 public class Client {
 
     private static void printSafjNest() {
-        System.out.println("\033[46;30m "
-                + "                                                      __            \t\033[0m\n\033[46;30m"
+        System.out.println("\033[46;30m"
+                + "                                                       __            \t\033[0m\n\033[46;30m"
                 + "                                                      // \\           \t\033[0m\n\033[46;30m"
                 + "                                                      \\\\_/ //        \t\033[0m\n\033[46;30m"
                 + "                                     '-.._.-''-.._.. -(||)(')        \t\033[0m\n\033[46;30m"
