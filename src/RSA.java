@@ -34,6 +34,7 @@ import java.util.Base64; //Codifica e decodifica base64
  * che una stringa puo' contenere per essere criptabile con l'algoritmo RSA.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
  * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
+ * @author <a href="https://github.com/adrianopesaresi">Adriano Pesaresi</a>
  * @see <a href="https://it.wikipedia.org/wiki/RSA_(crittografia)">Wikipedia: RSA</a>
  */
 public class RSA {

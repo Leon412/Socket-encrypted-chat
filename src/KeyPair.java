@@ -28,6 +28,7 @@
  * La classe {@code KeyPair} rappresenta un paio di chiavi sotto forma di stringhe, una pubblica una privata.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
  * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
+ * @author <a href="https://github.com/adrianopesaresi">Adriano Pesaresi</a>
  */
 public class KeyPair {
     private String privateKey;
