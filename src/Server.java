@@ -35,6 +35,7 @@ import java.io.IOException;
  * Vengono memorizzati i thread avviati dal server, la mappa dei messaggi e la mappa delle descrizioni dei comandi che possono essere eseguiti dal client.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
  * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
+ * @author <a href="https://github.com/adrianopesaresi">Adriano Pesaresi</a>
  */
 public class Server {
     private static ArrayList<ServerThread> threads = new ArrayList<ServerThread>();     //Arraylist di thread
