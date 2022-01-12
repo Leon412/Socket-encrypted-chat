@@ -35,6 +35,7 @@ import java.util.HashMap; //Mappe
  * Il programma poi entra in un ciclo di risposta ai comandi inviati dal client che finisce con il comando {@code quit}.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
  * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
+ * @author <a href="https://github.com/adrianopesaresi">Adriano Pesaresi</a>
  */
 public class ServerThread extends Thread{
     private Socket s;                            //Socket con la connessione ad un client

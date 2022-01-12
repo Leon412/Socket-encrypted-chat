@@ -31,16 +31,17 @@ import java.io.*;  //PrintWriter|BufferedReader|InputStreamReader|IOException
  * comunicazione dal server e quando consentito invia i suoi comandi del programma.
  * @author <a href="https://github.com/Leon412">Leonardo Panichi</a>
  * @author <a href="https://github.com/sebastianomazzaferro">Sebastiano Mazzaferro</a>
+ * @author <a href="https://github.com/adrianopesaresi">Adriano Pesaresi</a>
  */
 public class Client {
 
     private static void printSafjNest() {
         System.out.println("\033[46;30m"
                 + "                                                       __            \t\033[0m\n\033[46;30m"
-                + "                                                      // \\           \t\033[0m\n\033[46;30m"
+                + "                                                      // \\          .\t\033[0m\n\033[46;30m"
                 + "                                                      \\\\_/ //        \t\033[0m\n\033[46;30m"
                 + "                                     '-.._.-''-.._.. -(||)(')        \t\033[0m\n\033[46;30m"
-                + "                                                       '''           \t\033[0m");
+                + "                                                       '''          .\t\033[0m");
         System.out.println("\033[46;30m"
                 + "\033[90m███████╗\033[93m █████╗ \033[90m███████╗\033[93m   ██╗    \033[90m███╗   ██╗\033[93m███████╗\033[90m███████╗\033[93m████████╗\033[0m\n\033[40m"
                 + "\033[90m██╔════╝\033[93m██╔══██╗\033[90m██╔════╝\033[93m   ██║    \033[90m████╗  ██║\033[93m██╔════╝\033[90m██╔════╝\033[93m╚══██╔══╝\033[0m\n\033[40m"
