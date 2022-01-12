@@ -67,6 +67,7 @@ public class Server {
         commandList.put("quit", "Esce dal programma\r\n\r\nQUIT");
         commandList.put("help", "Fornisce la guida per i comandi\r\n\r\nHELP [comando]\r\n\r\n\tcomando - visualizza informazioni di guida per il comando.");
         
+        System.out.println("Server started");
         while(true) {
             try (
                 ServerSocket serverSocket = new ServerSocket(portNumber); //Crea il socket del server
