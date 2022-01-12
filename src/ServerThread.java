@@ -104,7 +104,7 @@ public class ServerThread extends Thread{
             //Termina quando riceve null ovvero quando l'utente si disconnette
             while((line = in.readLine()) != null) {
                 String lineArray[] = line.split(" ", 3); //Divide la stringa inviata dal client ad ogni spazio per massimo 3 volte
-                System.out.println(userName + " -> " + lineArray[0]);        //Stampa comando sul server
+                System.out.println(userName + " -> " + lineArray[0]); //Stampa comando sul server
 
                 //Controlla se il comando immesso dallo user esiste, se esiste lo esegue
                 switch (lineArray[0].toLowerCase()) {
