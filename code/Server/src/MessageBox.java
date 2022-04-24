@@ -123,6 +123,7 @@ public class MessageBox {
         mb.get(receiver).add(new Message(sender, msg, LocalDateTime.now())); //Aggiunge un nuovo messaggio alla coda dei messaggi del ricevente
         return true;
     }
+    
     /**
      * Controlla se esiste gia' un utente nella mappa con lo stesso username.
      * <p>

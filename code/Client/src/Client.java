@@ -89,9 +89,9 @@ public class Client {
                     toSend = stdIn.readLine();
 
                     //Se l'utente ha scritto il comando send ci sono un po' di controlli che il client 
-                    //deve fare prima di mandare il messaggio da inviare al server
+                    //deve fare prima di mandare il messaggio al server
                     //Innanzitutto controlla se lo user a cui si vuole mandare un messaggio esiste
-                    //questo controllo lo fa chiedendo la chiave pubblica dello user al server e vedendo la sua risposta
+                    //chiedendo la chiave pubblica dello user al server e vedendo la sua risposta
                     //Se la sua risposta non e' "<Server> sintassi errata" allora controlla se il messaggio e' 
                     //abbastanza corto per essere criptato, se si lo invia
                     if(toSend.indexOf("send ") == 0) {
@@ -124,7 +124,7 @@ public class Client {
 
                 //Il server avvisa il client che sta per arrivare un messaggio criptato
                 //Quindi lo legge e lo decripta
-                //Il messaggio che arriva e' in formato "[data]<ricevente> contenuto criptato"
+                //Il messaggio che arriva e' in formato "[data/ora]<ricevente> contenuto criptato"
                 else if(response.equals("DECRYPT")) {
                     response = in.readLine();
                     String responseArray[] = response.split(" ", 2);

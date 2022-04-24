@@ -88,7 +88,7 @@ public class ServerThread extends Thread{
                 userName = in.readLine();
             }while(userName.contains(" ") || mBox.contains(userName) || userName.equals("Server"));
 
-            //Chiede al client di mandargli la sua chiave privata
+            //Chiede al client di mandargli la sua chiave pubblica
             out.println("SENDKEY");
             clientKey = in.readLine();
 
